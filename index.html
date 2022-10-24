@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <!--<script src="./jspdf/dist/jspdf.min.js"></script>-->
+    <script src="./jspdf-AutoTable/examples/libs/jspdf.umd.js"></script>
+    <script src="./jspdf-AutoTable/dist/jspdf.plugin.autotable.js"></script>
+    <title>Ficha Asistencia</title>
+</head>
+<body>
+    <header>
+        <h1>
+            Ficha de Asistencia 
+        </h1>
+    </header>
+    <main>
+            <div class="formu"  id="formulario">
+                <h2>
+                    Datos Generales
+                </h2>
+                <form action="" method="post" >
+                    <div class="aux">
+                        <label class="lab" for="asignatura">
+                            <input type="text" name="asignatura" id="asignatura" required="">
+                            <span>Asignatura</span>
+                        </label>
+                        <label class="lab" for="carga_horaria">
+                            <input type="number" name="carga_horaria" id="carga_horaria" required="">
+                            <span>Carga Horaria</span>
+                        </label>
+                    </div>
+                    <div class="aux">
+                        <label class="lab" for="docente">
+                            <input type="text" name="docente" id="docente" required="">
+                            <span>Nombre del Docente</span>
+                        </label>
+                        <label class="lab" for="mes">
+                            <input list="meses" name="mes" id="mes" required="">
+                            <span>Mes Trabajado</span>
+                        </label>
+                        <datalist id="meses">
+                            <option value="Enero"></option>
+                            <option value="Febrero"></option>
+                            <option value="Marzo"></option>
+                            <option value="Abril"></option>
+                            <option value="Mayo"></option>
+                            <option value="Junio"></option>
+                            <option value="Julio"></option>
+                            <option value="Agosto"></option>
+                            <option value="Septiembre"></option>
+                            <option value="Octubre"></option>
+                            <option value="Noviembre"></option>
+                            <option value="Diciembre"></option>
+                        </datalist>
+                    </div>
+                    <div class="aux">
+                        <label class="lab" for="item">
+                            <input type="number" name="item" id="item" required="">
+                            <span>Número de Item</span>
+                        </label>
+                        <label class="lab" for="auxiliar">
+                            <input type="text" name="auxiliar" id="auxiliar" required="">
+                            <span>Nombre del auxiliar</span>
+                        </label>
+                    </div>
+                    <h3>Informes Actividades</h3>
+                    <div id="Actividades">
+                        <div class="d1"> 
+                            <h4>Actividad 1</h4>
+                            <div class="aux">
+                                <label class="lab" for="fecha_0">
+                                    <input type="date" name="fecha_0" id="fecha_0" required="" class="esp_inp">
+                                    <span>Fecha</span>
+                                </label>
+                                <label class="lab" for="activ_0">
+                                    <input type="text" name="activ_0" id="activ_0" required="">
+                                    <span>Actividad Desarrollada</span>
+                                </label>
+                            </div>
+                            <div class="aux">
+                                <label class="lab" for="nro_0">
+                                    <input type="number" name="nro_0" id="nroA_0" required="" >
+                                    <span>Número Alumnos</span>
+                                </label>
+                                <label class="lab" for="aula_0">
+                                    <input type="text" name="aula_0" id="aula_0" required="" >
+                                    <span>Aula</span>
+                                </label>
+                                
+                            </div>
+                            <div class="aux">
+                                <label class="lab" for="horIni_0">
+                                    <input type="time" name="horIni_0" id="horIni_0" required="" class="esp_inp">
+                                    <span>Horario Inicio</span>
+                                </label>
+                                <label class="lab" for="horFin_0">
+                                    <input type="time" name="horFin_0" id="horFin_0" required="" class="esp_inp">
+                                    <span>Horario Final</span>
+                                </label>
+                                
+                            </div>
+                            <div class="aux">
+                                <label class="lab" for="nomDel_0">
+                                    <input type="text" name="nomDel_0" id="nomDel_0" required="">
+                                    <span>Nombre Delegado Estudiantil</span>
+                                </label>
+                                <label class="lab" for="firDel_0">
+                                    <input type="text" name="firDel_0" id="firDel_0" required="">
+                                    <span>Firma Delegado Estudiantil</span>
+                                </label>
+                            </div>
+                            <div class="aux">
+                                <label class="lab largo" for="obser_0">
+                                    <input type="text" name="obser_0" id="obser_0" required="">
+                                    <span>Observaciones</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </form>
+                <div class="botones">
+                    <div class="button" id="button-4">
+                        <div id="underline"></div>
+                        <button onclick="agrega()">Agregar Actividad</button>
+                    </div>
+                    <div class="button red ocultar" id="button-4" >
+                        <div id="underline" ></div>
+                        <button onclick="quitar()" >Quitar Actividad</button>
+                    </div>
+                    <div class="button" id="button-4">
+                        <div id="underline"></div>
+                        <button onclick="agrega_Tabla()">Generar PDF</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="table ocultar" id="tablita">
+                <table id="tabla_pdf">
+                    <thead>
+                        <tr>
+                            <th colspan="1" rowspan="2">
+                                FECHA
+                            </th>
+                            <th colspan="1" rowspan="2">
+                                ACTIVIDAD DESARROLLADA
+                            </th>
+                            <th colspan="1" rowspan="2">
+                                N.° DE ALUMNOS
+                            </th>
+                            <th colspan="2" rowspan="1">
+                                HORARIO 
+                            </th>
+                            <th colspan="1" rowspan="2">
+                                AULA
+                            </th>
+                            <th colspan="2" rowspan="1">
+                                DELEGADO ESTUDIANTIL
+                            </th>
+                            <th colspan="1" rowspan="2">
+                                OBSERVACIONES
+                            </th>
+                        </tr>
+                            <tr>
+                                <th>
+                                    INICIO
+                                </th>
+                                <th>
+                                    FIN
+                                </th>
+                                <th>
+                                    NOMBRE
+                                </th>
+                                <th>
+                                    FIRMA
+                                </th>
+                            </tr>
+                    </thead>
+                    <tbody id="tabla_body">
+
+                    </tbody>
+                </table>
+
+            </div>
+
+    </main>
+    <script>
+        var nroA=1;
+        function agrega(){
+            var div_p =document.getElementById("Actividades");
+
+            const divS = document.createElement("div");
+            divS.setAttribute("class","d");
+
+            const tit = document.createElement("h4");
+            tit.textContent = "Actividad "+(nroA+1);
+            divS.appendChild(tit);
+            
+            const div1 = document.createElement("div");
+            div1.setAttribute("class","aux");
+
+            const lab1= document.createElement("label");
+            lab1.setAttribute("class","lab");
+            lab1.setAttribute("for","fecha_"+nroA);
+
+            const inp1= document.createElement("input");
+            inp1.setAttribute("class","esp_inp");
+            inp1.setAttribute("type","date");
+            inp1.setAttribute("name","fecha_"+nroA);
+            inp1.setAttribute("id","fecha_"+nroA);
+            inp1.setAttribute("required","");
+            lab1.appendChild(inp1);
+
+            const spn1= document.createElement("span");
+            spn1.textContent="Fecha";
+            lab1.appendChild(spn1);
+
+            div1.appendChild(lab1);
+            
+            const lab2= document.createElement("label");
+            lab2.setAttribute("class","lab");
+            lab2.setAttribute("for","activ_"+nroA);
+
+            const inp2= document.createElement("input");
+            //inp2.setAttribute("class","lab");
+            inp2.setAttribute("type","text");
+            inp2.setAttribute("name","activ_"+nroA);
+            inp2.setAttribute("id","activ_"+nroA);
+            inp2.setAttribute("required","");
+            lab2.appendChild(inp2);
+
+            const spn2= document.createElement("span");
+            spn2.textContent="Actividad Desarrollada";
+            lab2.appendChild(spn2);
+
+            div1.appendChild(lab2);
+
+            divS.appendChild(div1);
+
+            const div2 = document.createElement("div");
+            div2.setAttribute("class","aux");
+
+            const lab3= document.createElement("label");
+            lab3.setAttribute("class","lab");
+            lab3.setAttribute("for","nroA_"+nroA);
+
+            const inp3= document.createElement("input");
+            //inp3.setAttribute("class","lab");
+            inp3.setAttribute("type","number");
+            inp3.setAttribute("name","nroA_"+nroA);
+            inp3.setAttribute("id","nroA_"+nroA);
+            inp3.setAttribute("required","");
+            lab3.appendChild(inp3);
+
+            const spn3= document.createElement("span");
+            spn3.textContent="Numero Alumnos";
+            lab3.appendChild(spn3);
+
+            div2.appendChild(lab3);
+            
+            const lab4= document.createElement("label");
+            lab4.setAttribute("class","lab");
+            lab4.setAttribute("for","aula_"+nroA);
+
+            const inp4= document.createElement("input");
+            //inp4.setAttribute("class","lab");
+            inp4.setAttribute("type","text");
+            inp4.setAttribute("name","aula_"+nroA);
+            inp4.setAttribute("id","aula_"+nroA);
+            inp4.setAttribute("required","");
+            lab4.appendChild(inp4);
+
+            const spn4= document.createElement("span");
+            spn4.textContent="Aula";
+            lab4.appendChild(spn4);
+
+            div2.appendChild(lab4);
+
+            divS.appendChild(div2);
+
+            const div3 = document.createElement("div");
+            div3.setAttribute("class","aux");
+
+            const lab5= document.createElement("label");
+            lab5.setAttribute("class","lab");
+            lab5.setAttribute("for","horIni_"+nroA);
+
+            const inp5= document.createElement("input");
+            inp5.setAttribute("class","esp_inp");
+            inp5.setAttribute("type","time");
+            inp5.setAttribute("name","horIni_"+nroA);
+            inp5.setAttribute("id","horIni_"+nroA);
+            inp5.setAttribute("required","");
+            lab5.appendChild(inp5);
+
+            const spn5= document.createElement("span");
+            spn5.textContent="Horario Inicio";
+            lab5.appendChild(spn5);
+
+            div3.appendChild(lab5);
+            
+            const lab6= document.createElement("label");
+            lab6.setAttribute("class","lab");
+            lab6.setAttribute("for","horFin_"+nroA);
+
+            const inp6= document.createElement("input");
+            inp6.setAttribute("class","esp_inp");
+            inp6.setAttribute("type","time");
+            inp6.setAttribute("name","horFin_"+nroA);
+            inp6.setAttribute("id","horFin_"+nroA);
+            inp6.setAttribute("required","");
+            lab6.appendChild(inp6);
+
+            const spn6= document.createElement("span");
+            spn6.textContent="Horario Final";
+            lab6.appendChild(spn6);
+
+            div3.appendChild(lab6);
+
+            divS.appendChild(div3);
+
+
+            const div4 = document.createElement("div");
+            div4.setAttribute("class","aux");
+
+            const lab7= document.createElement("label");
+            lab7.setAttribute("class","lab");
+            lab7.setAttribute("for","nomDel_"+nroA);
+
+            const inp7= document.createElement("input");
+            //inp7.setAttribute("class","lab");
+            inp7.setAttribute("type","text");
+            inp7.setAttribute("name","nomDel_"+nroA);
+            inp7.setAttribute("id","nomDel_"+nroA);
+            inp7.setAttribute("required","");
+            lab7.appendChild(inp7);
+
+            const spn7= document.createElement("span");
+            spn7.textContent="Nombre Delegado Estudiantil";
+            lab7.appendChild(spn7);
+
+            div4.appendChild(lab7);
+            
+            const lab8= document.createElement("label");
+            lab8.setAttribute("class","lab");
+            lab8.setAttribute("for","firDel_"+nroA);
+
+            const inp8= document.createElement("input");
+            //inp8.setAttribute("class","lab");
+            inp8.setAttribute("type","text");
+            inp8.setAttribute("name","firDel_"+nroA);
+            inp8.setAttribute("id","firDel_"+nroA);
+            inp8.setAttribute("required","");
+            lab8.appendChild(inp8);
+
+            const spn8= document.createElement("span");
+            spn8.textContent="Firma Delegado Estudiantil";
+            lab8.appendChild(spn8);
+
+            div4.appendChild(lab8);
+
+            divS.appendChild(div4);
+
+            const div5 = document.createElement("div");
+            div5.setAttribute("class","aux");
+
+            const lab9= document.createElement("label");
+            lab9.setAttribute("class","lab");
+            lab9.setAttribute("for","obser_"+nroA);
+
+            const inp9= document.createElement("input");
+            //inp9.setAttribute("class","lab");
+            inp9.setAttribute("type","text");
+            inp9.setAttribute("name","obser_"+nroA);
+            inp9.setAttribute("id","obser_"+nroA);
+            inp9.setAttribute("required","");
+            lab9.appendChild(inp9);
+
+            const spn9= document.createElement("span");
+            spn9.textContent="Observaciones";
+            lab9.appendChild(spn9);
+
+            div5.appendChild(lab9);
+
+            divS.appendChild(div5);
+
+            div_p.appendChild(divS);
+            
+            if(nroA==1){
+                var b = document.querySelector(".red");
+                b.className="button red";
+            }
+            nroA++;
+        }
+    
+        function quitar(){
+            var qwe = document.querySelectorAll(".d");
+            var as=qwe.length-1;
+            qwe[as].remove();
+            var qweD = document.querySelectorAll(".fila");
+            qweD[as].remove();
+            nroA--;
+
+            if(nroA==1){
+                var b = document.querySelector(".red");
+                b.className+=" ocultar";
+            }
+        }
+
+        function agrega_Tabla(){
+            var tabla =document.getElementById('tabla_body');
+            for (let i = 0; i < nroA; i++) {
+                const t_tr = document.createElement("tr");
+                t_tr.setAttribute("class","fila");
+
+                var fecha=document.getElementById('fecha_'+i).value;
+                const t_td1 = document.createElement("td");
+                t_td1.textContent=fecha;
+                t_tr.appendChild(t_td1);
+                
+
+                var activ=document.getElementById('activ_'+i).value;
+                const t_td2 = document.createElement("td");
+                t_td2.textContent=activ;
+                t_tr.appendChild(t_td2);
+                
+                var nro=document.getElementById('nroA_'+i).value;
+                const t_td3 = document.createElement("td");
+                t_td3.textContent=nro;
+                t_tr.appendChild(t_td3);
+
+                var aula=document.getElementById('aula_'+i).value;
+                const t_td4 = document.createElement("td");
+                t_td4.textContent=aula;
+                t_tr.appendChild(t_td4);
+                
+                var horIni=document.getElementById('horIni_'+i).value;
+                const t_td5 = document.createElement("td");
+                t_td5.textContent=horIni;
+                t_tr.appendChild(t_td5);
+                
+                var horFin=document.getElementById('horFin_'+i).value;
+                const t_td6 = document.createElement("td");
+                t_td6.textContent=horFin;
+                t_tr.appendChild(t_td6);
+
+                var nomDel=document.getElementById('nomDel_'+i).value;
+                const t_td7 = document.createElement("td");
+                t_td7.textContent=nomDel;
+                t_tr.appendChild(t_td7);
+
+                var firDel=document.getElementById('firDel_'+i).value;
+                const t_td8 = document.createElement("td");
+                t_td8.textContent=firDel;
+                t_tr.appendChild(t_td8);
+
+                var obser=document.getElementById('obser_'+i).value;
+                const t_td9 = document.createElement("td");
+                t_td9.textContent=obser;
+                t_tr.appendChild(t_td9);
+
+                tabla.appendChild(t_tr);
+
+            }
+
+            generarPDF();
+        }
+        function elimina_tabla(){
+            var qweD = document.querySelectorAll(".fila");
+            for (let j = 0; j < nroA; j++) {
+                qweD[j].remove();
+                quitar();
+            }
+        }
+        
+        function generarPDF(){
+            
+            var asignatura=document.getElementById('asignatura').value;
+            var carga_horaria=document.getElementById('carga_horaria').value;
+            var docente=document.getElementById('docente').value;
+            var mes=document.getElementById('mes').value;
+            var item=document.getElementById('item').value;
+            var auxiliar=document.getElementById('auxiliar').value;
+            var fecha=new Date();
+            var year=fecha.getFullYear();
+            var year = String(year);
+            var doc = new jspdf.jsPDF("landscape",'mm',[356 , 245]);
+
+            doc.setFont("helvetica","bold");
+            doc.setFontSize(10);
+            doc.text(37,5,'UNIVERSIDAD BOLIVIANA');
+            doc.text(25,9,'UNIVERSIDAD MAYOR DE SAN ANDRES');
+            doc.text(32,13,'SECCIÓN BECAS ACADEMICAS');
+
+            doc.setFont("times","bold");
+            doc.setFontSize(25);
+            doc.text(75,25,'FICHA DE ASISTENCIA - AUXILIAR ACADEMICO');
+
+            doc.setFont("courier","bold");
+            doc.setFontSize(12);
+            doc.text(25,35,'FACULTAD: ');
+            doc.text(25,40,'CARRERA: ');
+            doc.text(25,45,'ASIGNATURA: ');
+            doc.text(25,50,'NOMBRE DEL DOCENTE: ');
+            doc.text(25,55,'NOMBRE DEL AUXILIAR: ');
+
+            doc.text(190,35,'GESTION ACADEMICA: ');
+            doc.text(190,40,'SEMESTRAL/ANUAL: ');
+            doc.text(190,45,'CARGA HORARIA: ');
+            doc.text(190,50,'MES TRABAJADO: ');
+            doc.text(190,55,'NUMERO DE ITEM: ');
+            
+            doc.setFont("times","normal");
+            doc.text(48,35,'Ciencias Economicas y Financieras');
+            doc.text(46,40,'Contaduría Pública');
+            doc.text(53,45,asignatura);
+            doc.text(73,50,docente);
+            doc.text(76,55,'Aux. '+auxiliar);
+
+            doc.text(236,35,year);
+            doc.text(231,40,'Anual');
+            doc.text(226,45,carga_horaria+' horas');
+            doc.text(226,50,mes);
+            doc.text(228,55,item);
+
+            doc.autoTable({ 
+                html: '#tabla_pdf',
+                theme: 'grid',
+                startY: 60,
+                headStyles: {
+                    fillColor: '#fff',
+                    textColor: '#000',
+                    halign: 'center',
+                    valign: 'middle',
+                    lineColor: '#ccc',
+                    lineWidth: 0.5
+                },
+                bodyStyles:{
+                    halign: 'center',
+                    valign: 'middle',
+                },
+                columnStyles:{
+                    3: {
+                        minCellWidth: 20
+                    },
+                    4: {
+                        minCellWidth: 20
+                    },
+                    8:{
+                        maxCellWidth: 30
+                    }
+                }
+            });
+            pageHeight = doc.internal.pageSize.height;
+
+            if (doc.lastAutoTable.finalY>= pageHeight-30){
+                doc.addPage ();    
+            }
+            doc.setFont("times","italic");
+            doc.text(25,doc.lastAutoTable.finalY + 5,'El Auxiliar Academico cumplió con las tareas planificadas de acuerdo a la carga horaria asignada');
+            
+            doc.setFont("COURIER","bold");
+            doc.text(75,pageHeight - 20,'FIRMA DEL DOCENTE');
+            doc.text(50,pageHeight - 15,'NOMBRE: ');
+            doc.text(230,pageHeight - 20,'Vo. Bo. DIRECTOR DE CARRERA');
+
+
+
+            doc.setFont("Times","bold");
+            doc.text(25,pageHeight - 10,'NOTA: La ficha tiene validez con la firma del Señor Docente y Vo. Bo. del Director de Carrera');
+
+            doc.setFont("times","normal");
+            doc.text(70,pageHeight - 15,'Mg Sc Ronny Yañez Mendoza Castilla Castillon');
+
+            doc.setFontSize(10);
+            doc.text(255,pageHeight - 15,'S E L L O');
+            /*
+            doc.setFont("times","italic");
+            doc.text(25,doc.lastAutoTable.finalY + 5,'El Auxiliar Academico cumplió con las tareas planificadas de acuerdo a la carga horaria asignada');
+
+
+            doc.setFont("COURIER","bold");
+            doc.text(75,10+doc.lastAutoTable.finalY + 25,'FIRMA DEL DOCENTE');
+            doc.text(50,10+doc.lastAutoTable.finalY + 30,'NOMBRE: ');
+            doc.text(230,10+doc.lastAutoTable.finalY + 25,'Vo. Bo. DIRECTOR DE CARRERA');
+
+
+
+            doc.setFont("Times","bold");
+            doc.text(25,10+doc.lastAutoTable.finalY + 35,'NOTA: La ficha tiene validez con la firma del Señor Docente y Vo. Bo. del Director de Carrera');
+
+            doc.setFont("TIMES","NORMAL");
+            doc.text(70,10+doc.lastAutoTable.finalY + 30,'Mg Sc Ronny Yañez Mendoza Castilla Castillon');
+
+            doc.setFontSize(10);
+            doc.text(255,10+doc.lastAutoTable.finalY + 30,'S E L L O');
+*/
+            doc.save('table.pdf');
+
+            /*elimina_tabla();*/
+        }
+    </script>
+</body>
+</html>

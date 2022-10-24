@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.min.js"></script>
+<button id="generate">Generate PDF</button>
+  
+  <table id="table" style="display: none;">
+      <thead>
+      <tr>
+          <th>ID</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>Table</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td align="right">1</td>
+          <td>Donna</td>
+          <td>Moore</td>
+          <td>dmoore0@furl.net</td>
+          <td>China</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td align="right">2</td>
+          <td>Janice</td>
+          <td>Henry</td>
+          <td>jhenry1@theatlantic.com</td>
+          <td>Ukraine</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td align="right">3</td>
+          <td>Ruth</td>
+          <td>Wells</td>
+          <td>rwells2@constantcontact.com</td>
+          <td>Trinidad and Tobago</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td align="right">4</td>
+          <td>Jason</td>
+          <td>Ray</td>
+          <td>jray3@psu.edu</td>
+          <td>Brazil</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td align="right">5</td>
+          <td>Jane</td>
+          <td>Stephens</td>
+          <td>jstephens4@go.com</td>
+          <td>United States</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td align="right">6</td>
+          <td>Adam</td>
+          <td>Nichols</td>
+          <td>anichols5@com.com</td>
+          <td>Canada</td>
+          <td></td>
+      </tr>
+      </tbody>
+  </table>
+  <script>
+      var elem = document.getElementById("generate");
+  elem.onclick = function () {
+  var doc = new jsPDF();
+  doc.autoTable({
+      html: '#table',
+      didDrawCell: function (data) {
+          if (data.column.dataKey === 5 && data.cell.section === 'body') {
+              doc.autoTable({
+                  head: [["One", "Two", "Three", "Four"]],
+                  body: [
+                      ["1", "2", "3", "4"],
+                      ["1", "2", "3", "4"],
+                      ["1", "2", "3", "4"],
+                      ["1", "2", "3", "4"]
+                  ],
+                  startY: data.cell.y + 2,
+                  margin: {left: data.cell.x + data.cell.padding('left')},
+                  tableWidth: 'wrap',
+                  theme: 'grid',
+                  styles: {
+                      fontSize: 7,
+                      cellPadding: 1,
+                  }
+              });
+          }
+      },
+      columnStyles: {
+          5: {cellWidth: 40}
+      },
+      bodyStyles: {
+          minCellHeight: 30
+      }
+  });
+  doc.save('table.pdf');
+};
+</script>
+</body>
+</html>
